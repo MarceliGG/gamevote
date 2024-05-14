@@ -4,26 +4,65 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-rgb: 255, 255, 255;
+  --accent1-rgb: 12, 195, 139;
+  --accent2-rgb: 45, 24, 99;
+  --accent3-rgb: 72, 51, 126;
+  --accent4-rgb: 163, 142, 217;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-rgb: 26, 26, 26;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
+	height: 100vh;
+}
+
+.bg-accent1{
+    background: rgb(var(--accent1-rgb))
+}
+
+.bg-accent2{
+    background: rgb(var(--accent2-rgb))
+}
+
+.bg-accent3{
+    background: rgb(var(--accent3-rgb))
+}
+
+.bg-accent4{
+    background: rgb(var(--accent4-rgb))
+}
+
+.fg-accent1{
+    color: rgb(var(--accent1-rgb))
+}
+
+.fg-accent2{
+    color: rgb(var(--accent2-rgb))
+}
+
+.fg-accent3{
+    color: rgb(var(--accent3-rgb))
+}
+
+.fg-accent4{
+    color: rgb(var(--accent4-rgb))
+}
+@layer components {
+    input.accent1 {
+        @apply bg-accent1 rounded-md text-black px-2 py-1;
+    }
+
+    button.accent1 {
+        @apply bg-accent1 rounded-md text-black px-6 py-2 hover:scale-110 duration-100 active:scale-100;
+    }
 }
 
 @layer utilities {
