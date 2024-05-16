@@ -1,14 +1,6 @@
 import postgres from 'postgres'
+import { postgres_options } from "./settings.js"
 
-// postgres options. change in prod
-const options = {
-    host: "172.17.0.2",
-    port: 5432,
-    database: "gamevote",
-    username: "gamevote",
-    password: "mysecretpassword"
-}
-
-const sql = postgres(options)
+const sql = postgres(postgres_options)
 
 export default sql
