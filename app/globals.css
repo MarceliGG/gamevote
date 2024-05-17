@@ -55,6 +55,12 @@ body {
 .fg-accent4{
     color: rgb(var(--accent4-rgb))
 }
+
+a {
+    color: rgb(var(--accent1-rgb));
+    text-decoration: underline;
+}
+
 @layer components {
     input.accent1 {
         @apply bg-accent1 rounded-md text-black px-2 py-1;
