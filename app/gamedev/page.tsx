@@ -72,8 +72,18 @@ export default function Dashboard() {
       }
     }
   };
-    
-const deleteImage = async () {}
+
+  const deleteImage = async (key) => {
+    const response = await fetch("/api/images", {
+      method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({token: token, id: key}), // body data type must match "Content-Type" header
+    });
+    getImages();
+  };
 
   useEffect(() => {
     getGameData();
@@ -82,7 +92,7 @@ const deleteImage = async () {}
 
   return (
     <main className="flex items-center justify-center h-screen bg-accent2 gap-10">
-      <div className="flex flex-col items-center justify-center p-10 rounded-xl bg-accent3 gap-2 h-[90%]">
+      <div className="flex flex-col items-center justify-center p-10 rounded-xl bg-accent3 gap-2 w-[60%] h-[90%]">
         <label htmlFor="file">Dodaj Obraz</label>
         <input
           type="file"
@@ -93,11 +103,14 @@ const deleteImage = async () {}
         <button onClick={uploadImage} className="accent1 mb-2">
           Dodaj
         </button>
-        <div className="h-[90%] overflow-scroll flex flex-wrap w-[800px] flex-col">
+        <div className="h-[90%] overflow-scroll flex w-[100%] gap-2 flex-wrap flex-col">
           {images.map((img) => (
-            <div>
-              <img className="max-w-80" key={img.id} src={img.data} />
-              <button onClick={deleteImage} className="accent1 mb-2">
+            <div key={img.id}>
+              <img className="max-w-80" src={img.data} />
+              <button
+                onClick={() => deleteImage(img.id)}
+                className="accent1 mb-2"
+              >
                 Usuń
               </button>
             </div>
@@ -106,7 +119,7 @@ const deleteImage = async () {}
       </div>
       <form className="flex flex-col items-center justify-center p-10 rounded-xl bg-accent3 gap-2 h-[90%]">
         <div className="flex flex-col items-center justify-center">
-          <h1 className="text-3xl mb-6">Dane Gry</h1>
+          <h1 className="text-3xl mb-6">Informacje o Grze</h1>
           <label htmlFor="name">Nazwa:</label>
           <input
             id="name"
