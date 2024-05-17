@@ -23,16 +23,18 @@ export async function GET(req) {
       error: false,
       data: await get_by_id(params.get("id")),
     });
-  if (params.get("token") !== null){
+  if (params.get("token") !== null) {
     return NextResponse.json({
       error: false,
       data: await get_by_token(params.get("token")),
-    })}
+    });
+  }
 
   return NextResponse.json({ error: true, message: "unknown id" });
 }
 
 export async function POST(req) {
+    try {
   const data = await req.json();
   const token = data.token;
   const decoded = jwt.verify(token, jwtpass);
@@ -51,8 +53,19 @@ export async function POST(req) {
     return NextResponse.json({ error: true, message: "missing description" });
 
   await sql`
-    INSERT INTO Games (company_id, name, website, type, premiere_date, description) VALUES (${decoded.id}, ${name}, ${website}, ${type}, ${premiere_date}, ${description});
+    INSERT INTO Games (company_id, name, website, type, premiere_date, description)
+      VALUES (${decoded.id}, ${name}, ${website}, ${type}, ${premiere_date}, ${description})
+    ON CONFLICT (company_id) DO UPDATE
+      SET 
+        name = excluded.name,
+        website = excluded.website,
+        type = excluded.type,
+        premiere_date = excluded.premiere_date,
+        description = excluded.description;
   `;
+	} catch (r) {
+console.log(r)
+}
 
   return NextResponse.json({ error: false });
 }
