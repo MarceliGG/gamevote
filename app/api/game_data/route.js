@@ -13,7 +13,7 @@ async function get_by_id(id) {
 
 async function get_by_token(token) {
   const decoded = jwt.verify(token, jwtpass);
-  return get_by_id(decoded.id);
+  return await get_by_id(decoded.id);
 }
 
 export async function GET(req) {
@@ -21,13 +21,13 @@ export async function GET(req) {
   if (params.get("id") !== null)
     return NextResponse.json({
       error: false,
-      data: get_by_id(params.get("id")),
+      data: await get_by_id(params.get("id")),
     });
-  if (params.get("token") !== null)
+  if (params.get("token") !== null){
     return NextResponse.json({
       error: false,
-      data: get_by_token(params.get("token")),
-    });
+      data: await get_by_token(params.get("token")),
+    })}
 
   return NextResponse.json({ error: true, message: "unknown id" });
 }
