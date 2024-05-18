@@ -53,8 +53,8 @@ export async function POST(req) {
     return NextResponse.json({ error: true, message: "missing description" });
 
   await sql`
-    INSERT INTO Games (company_id, name, website, type, premiere_date, description)
-      VALUES (${decoded.id}, ${name}, ${website}, ${type}, ${premiere_date}, ${description})
+    INSERT INTO Games (company_id, name, website, type, premiere_date, description, votes)
+      VALUES (${decoded.id}, ${name}, ${website}, ${type}, ${premiere_date}, ${description}, 0)
     ON CONFLICT (company_id) DO UPDATE
       SET 
         name = excluded.name,

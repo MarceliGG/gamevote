@@ -17,6 +17,7 @@ export default function Game({ params }) {
   const getGameData = async () => {
     const response = await axios.get(`/api/game_data?id=${id}`);
     if (!response.data.error) setGameData(response.data.data);
+    else toast.warning(`API returned error: '${data.message}'`);
   };
 
   const getImages = async () => {
@@ -29,6 +30,23 @@ export default function Game({ params }) {
   const getCompany = async () => {
     const response = await axios.get(`/api/company_data?id=${id}`);
     if (!response.data.error) setCompany(response.data.data);
+    else toast.warning(`API returned error: '${data.message}'`);
+  };
+
+  const vote = async () => {
+    if (!sessionStorage.getItem("vote_pass")) {
+      toast.error("Brak hasła do głosowania. Głosowanie wyłączone.");
+      return;
+    }
+    const response = await axios.post("/api/vote", {
+      pass: sessionStorage.getItem("vote_pass"),
+      id: id,
+    });
+    if (response.data.error){
+      toast.warning(`API returned error: '${data.message}'`);
+	return
+	}
+      toast.succes(`Zagłosowano na ${gameData.name}.`)
   };
 
   const carRes = {
@@ -68,11 +86,17 @@ export default function Game({ params }) {
           <div>Opis:</div>
           {gameData.description}
         </div>
-        <div className="flex gap-10 justify-between">
+        <div className="flex gap-10 items-center justify-between">
           <div>Typ Gry: {gameData.type}</div>
           <div>
             Data Premiery:{" "}
             {gameData.premiere_date?.replace("T00:00:00.000Z", "")}
+          </div>
+          <div className="flex items-center gap-10">
+            <div>Głosy: {gameData.votes}</div>
+            <button onClick={vote} className="accent1 mb-2">
+              Zagłosuj
+            </button>
           </div>
         </div>
       </section>

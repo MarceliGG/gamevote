@@ -11,3 +11,6 @@ export const postgres_options = {
 
 // password for jsonwebtoken
 export const jwtpass = "temppas"
+
+// password fot enabling voting
+export const voting_password = "somepass"
