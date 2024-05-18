@@ -81,3 +81,14 @@ a:hover {
     text-wrap: balance;
   }
 }
+
+main {
+ height: 100vh;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  main {
+    height: auto;
+    min-height: 100vh;
+  }
+}

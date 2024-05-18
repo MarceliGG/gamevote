@@ -30,12 +30,13 @@ export default function Game({ params }) {
     const response = await axios.get(`/api/company_data?id=${id}`);
     if (!response.data.error) setCompany(response.data.data);
   };
-    
-const carRes = {
-  res: {
-    breakpoint: { max: 5000, min: 0 },
-    items: 1
-  }}
+
+  const carRes = {
+    res: {
+      breakpoint: { max: 5000, min: 0 },
+      items: 1,
+    },
+  };
 
   useEffect(() => {
     getCompany();
@@ -44,23 +45,35 @@ const carRes = {
   }, []);
 
   return (
-    <main className="flex items-center justify-center h-screen bg-accent2 gap-10 flex-col w-screen">
-      <section className="bg-accent3 p-4 rounded-lg w-[90%]">
-	  <button onClick={()=>console.log(images)}>aaa</button>
+    <main className="flex items-center justify-center py-10 bg-accent2 gap-10 flex-col">
+      <section className="bg-accent3 p-4 rounded-lg w-[80%]">
         <Carousel className="w-[100%]" responsive={carRes} infinite>
           {images.map((img) => (
-            <img key={img.id} className="" src={img.data} />
+            <img key={img.id} className="rounded-md" src={img.data} />
           ))}
         </Carousel>
       </section>
-      <section className="bg-accent3 p-4 rounded-lg flex gap-10">
-        <div>
-          <h1 className="text-xl">{gameData.name}</h1>
-          <Link href={`//${gameData.website}`}>{gameData.website}</Link>
+      <section className="bg-accent3 p-4 rounded-lg flex gap-4 flex-col w-[80%]">
+        <div className="flex gap-10 justify-between">
+          <div>
+            <h1 className="text-xl">{gameData.name}</h1>
+            <Link href={`//${gameData.website}`}>{gameData.website}</Link>
+          </div>
+          <div>
+            <h2 className="text-xl text-gray-300">by: {company.name}</h2>
+            <Link href={`//${company.domain}`}>{company.domain}</Link>
+          </div>
         </div>
         <div>
-          <h2 className="text-xl text-gray-300">by: {company.name}</h2>
-          <Link href={`//${company.domain}`}>{company.domain}</Link>
+          <div>Opis:</div>
+          {gameData.description}
+        </div>
+        <div className="flex gap-10 justify-between">
+          <div>Typ Gry: {gameData.type}</div>
+          <div>
+            Data Premiery:{" "}
+            {gameData.premiere_date?.replace("T00:00:00.000Z", "")}
+          </div>
         </div>
       </section>
     </main>
