@@ -24,7 +24,7 @@ export default function Home() {
           className="bg-accent3 rounded-xl flex items-center flex-col justify-center h-80 w-96"
 	  onClick={()=>router.push(`/game/${game.id}`)}
         >
-          <img className="max-w-80 rounded-lg" src={game.data} />
+          <img className="max-w-80 rounded-lg" src={game.data} alt="[Image not loaded]" />
           <h2 className="text-lg">{game.game_name}</h2>
           <h3 className="text-sm text-gray-300">by: {game.company_name}</h3>
         </button>
